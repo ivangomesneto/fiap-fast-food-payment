@@ -1,5 +1,4 @@
 ﻿using FourSix.Domain.Entities.PagamentoAggregate;
-using FourSix.Domain.Entities.PedidoAggregate;
 using FourSix.UseCases.Interfaces;
 
 namespace FourSix.UseCases.UseCases.Pagamentos.AlterarStatusPagamento

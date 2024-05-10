@@ -1,6 +1,4 @@
-﻿using FourSix.Domain.Entities.PedidoAggregate;
-
-namespace FourSix.Domain.Entities.PagamentoAggregate
+﻿namespace FourSix.Domain.Entities.PagamentoAggregate
 {
     public class Pagamento : BaseEntity, IAggregateRoot, IBaseEntity
     {
@@ -29,7 +27,6 @@ namespace FourSix.Domain.Entities.PagamentoAggregate
         public decimal ValorPago { get; private set; }
         public DateTime DataAtualizacao { get; private set; }
 
-        public Pedido Pedido { get; set; }
         public StatusPagamento Status { get; set; }
 
         public void AtualizarStatus(EnumStatusPagamento status, decimal? valorPago = null)

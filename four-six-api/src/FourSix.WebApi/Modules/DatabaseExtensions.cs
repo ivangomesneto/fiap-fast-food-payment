@@ -1,6 +1,5 @@
 ﻿using FourSix.Controllers.Gateways.DataAccess;
 using FourSix.Controllers.Gateways.Repositories;
-using FourSix.Controllers.Gateways.Repositories.Cache;
 using FourSix.UseCases.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Security;
@@ -26,39 +25,7 @@ namespace FourSix.WebApi.Modules
                 option.UseSqlServer(ReadDefaultConnectionStringFromAppSettings("PersistenceModule:SQLServerConnection"));
             });
 
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions();
-                options.ConfigurationOptions.AbortOnConnectFail = false;
-                options.ConfigurationOptions.AllowAdmin = true;
-                options.ConfigurationOptions.Ssl = true;
-                options.ConfigurationOptions.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
-                options.ConfigurationOptions.EndPoints.Add(ReadDefaultConnectionStringFromAppSettings("CacheModule:RedisConnection"));
-
-                options.ConfigurationOptions.CertificateValidation += (sender, certificate, chain, sslPolicyErrors) =>
-                {
-                    if (sslPolicyErrors == SslPolicyErrors.None)
-                    {
-                        return true;
-                    }
-
-                    if (sslPolicyErrors == SslPolicyErrors.RemoteCertificateNameMismatch)
-                    {
-                        return true;
-                    }
-
-                    return false;
-                };
-            }
-            );
-
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IClienteRepository, ClienteRepository>();
-            services.AddScoped<IProdutoRepository, ProdutoCacheRepository>();
-            services.AddScoped<ProdutoRepository>();
-            services.AddScoped<IPedidoRepository, PedidoRepository>();
-            services.AddScoped<IPedidoItemRepository, PedidoItemRepository>();
-            services.AddScoped<IPedidoCheckoutRepository, PedidoStatusRepository>();
             services.AddScoped<IPagamentoRepository, PagamentoRepository>();
             services.AddScoped<DbContext, Context>();
 
