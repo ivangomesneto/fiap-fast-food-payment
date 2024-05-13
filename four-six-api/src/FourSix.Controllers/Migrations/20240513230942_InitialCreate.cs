@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace FourSix.Controllers.Gateways.Migrations
+namespace FourSix.Controllers.Migrations
 {
     /// <inheritdoc />
-    public partial class Create : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -37,7 +37,8 @@ namespace FourSix.Controllers.Gateways.Migrations
                     ValorPedido = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Desconto = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     ValorTotal = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    ValorPago = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false)
+                    ValorPago = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,13 +58,9 @@ namespace FourSix.Controllers.Gateways.Migrations
                 {
                     { (short)1, "Aguardando Pagamento" },
                     { (short)2, "Pago" },
-                    { (short)3, "Cancelado" }
+                    { (short)3, "Cancelado" },
+                    { (short)4, "Negado" }
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Pagamento_PedidoId",
-                table: "Pagamento",
-                column: "PedidoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pagamento_StatusId",
@@ -76,11 +73,9 @@ namespace FourSix.Controllers.Gateways.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Pagamento");
-         
+
             migrationBuilder.DropTable(
                 name: "StatusPagamento");
-
-            
         }
     }
 }
